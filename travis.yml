@@ -1,1 +1,26 @@
 language: node_js
+git:
+  depth: 3
+branches:
+  only:
+  - devops
+# ensure that docker is available on the travis machine
+services:
+  - docker
+ 
+# ensure that the docker version is up to date so that we're sure that
+# we can build any sort of docker-compose file that may be in the project
+# e.g., the default ubuntu docker version can't build v3 compose files
+sudo: required
+before_deploy:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+ 
+# wire-up the script to build the application and deploy it to service fabric
+# the script is run whenever a tag is added to the application's repository
+deploy:
+  - provider: script
+    script: deploy-to-service-fabric.sh
+    on:
+      repo: https://github.com/Arnoways/Time_Manager
+      tags: true
