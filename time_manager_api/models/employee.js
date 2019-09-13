@@ -11,4 +11,4 @@ module.exports = (sequelize, DataTypes) => {
     Employee.belongsTo(models.Role, {foreignKey: 'roleId' });
   };
   return Employee;
-};
+}

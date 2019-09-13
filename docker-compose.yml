@@ -1,0 +1,40 @@
+version: '3'
+services:
+  front:
+    build:
+      context: ./time_manager_front
+    ports:
+      - "8080:8080"
+    networks:
+      - front-network
+
+  back:
+    build:
+      context: ./time_manager_api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - back-network
+      - front-network
+
+  bdd:
+    image: postgres:latest
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=gotham"
+    expose:
+      - 5432
+    networks:
+      - back-network
+    volumes: 
+      - gotham-data:/var/lib/postgresql/data
+
+networks:
+  back-network:
+  front-network:
+
+volumes:
+  gotham-data:

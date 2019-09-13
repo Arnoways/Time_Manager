@@ -3,24 +3,21 @@
     "username": "postgres",
     "password": "postgres",
     "database": "gotham",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "host": "bdd",
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "postgres",
-    "database": "database",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "database": "gotham",
+    "host": "bdd",
+    "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "postgres",
-    "database": "database",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "database": "gotham",
+    "host": "bdd",
+    "dialect": "postgres"
   }
 }
