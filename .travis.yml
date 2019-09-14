@@ -6,9 +6,8 @@ services:
   - docker
 
 script:
-  - docker-compose build back front bdd
-  - docker-compose up bdd -d
-  - sleep 5
+  - docker-compose start bdd
+  - docker-compose build
   - docker-compose up -d
   - docker-compose ps
   - curl -X GET -I http://localhost:3000/health
