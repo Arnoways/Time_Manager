@@ -10,6 +10,7 @@ script:
   - docker-compose build back front
   - docker-compose up -d
   - docker-compose ps
+  - sleep 5
   - curl -X GET -I http://localhost:3000/health
   - sh create_roles.sh
   - sh create_dummy_user.sh
