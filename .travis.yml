@@ -6,8 +6,7 @@ services:
   - docker
 
 script:
-  - docker-compose build bdd
-  - docker-compose start bdd
+  - docker-compose up bdd -d
   - docker-compose build back front
   - docker-compose up -d
   - docker-compose ps
