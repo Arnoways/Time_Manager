@@ -8,7 +8,7 @@ services:
     networks:
       - front-network
     depends_on:
-      back
+      - back
 
   back:
     build:
@@ -21,7 +21,7 @@ services:
       - back-network
       - front-network
     depends_on:
-      bdd
+      - bdd
 
   bdd:
     image: postgres:latest
