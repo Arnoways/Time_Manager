@@ -1,26 +1,38 @@
 version: '3'
 services:
+  # frontend vuejs
   front:
     build:
       context: ./time_manager_front
+    # bind host machine port 8080 to the 8080 port of the container
     ports:
       - "8080:8080"
+    # specify network so frontend can't access directly to the database
     networks:
       - front-network
+    # using volume so we don't have to rebuild container after code modifications
+    volumes:
+      - front-code:/app
 
   back:
     build:
       context: ./time_manager_api
+    # bind host machine port 3000 to the 3000 port of the container
     ports:
       - "3000:3000"
+    # using env variable to speed up API as it is advised in documentation
     environment:
       - NODE_ENV=production
     networks:
       - back-network
       - front-network
+    # using volume so we don't have to rebuild container after code modifications
+    volumes:
+      - back-code:/usr/app/time_manager/
 
   bdd:
     image: postgres:latest
+    # postgres env variable to create gotham db so the API doesn't have to
     environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=postgres"
@@ -29,6 +41,7 @@ services:
       - 5432
     networks:
       - back-network
+    # volume for persistent database data
     volumes: 
       - gotham-data:/var/lib/postgresql/data
 
@@ -38,3 +51,5 @@ networks:
 
 volumes:
   gotham-data:
+  back-code:
+  front-code:
