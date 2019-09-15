@@ -31,6 +31,7 @@ services:
     # using volume so we don't have to rebuild container after code modifications
     volumes:
       - ./time_manager_api:/usr/app/time_manager/
+      - /usr/app/time_manager/node_modules
     restart: unless-stopped
 
   bdd:
