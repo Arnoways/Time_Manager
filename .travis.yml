@@ -5,6 +5,9 @@ branches:
 services:
   - docker
 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_0af220062a29_key -iv $encrypted_0af220062a29_iv -in arno.pem.enc -out arno.pem -d
+
 script:
   - docker-compose up -d bdd
   - docker-compose build back front
