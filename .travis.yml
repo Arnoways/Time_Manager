@@ -21,9 +21,7 @@ script:
   - docker-compose build back front
   - docker-compose up -d
   - docker-compose ps
-  # sleep 5 in order to let the back api start
   - sleep 5
-  # some healthcheck + basic posts
   - curl -X GET -I http://localhost:3000/health
   - sh scripts/create_roles.sh
   - sh scripts/create_dummy_user.sh
