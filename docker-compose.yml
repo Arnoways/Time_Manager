@@ -12,8 +12,9 @@ services:
       - front-network
     # using volume so we don't have to rebuild container after code modifications
     volumes:
-      - front-code:/app
+      - ./time_manager_front:/app
     restart: unless-stopped
+
 
   back:
     build:
@@ -29,7 +30,7 @@ services:
       - front-network
     # using volume so we don't have to rebuild container after code modifications
     volumes:
-      - back-code:/usr/app/time_manager/
+      - ./time_manager_api:/usr/app/time_manager/
     restart: unless-stopped
 
   bdd:
@@ -54,5 +55,3 @@ networks:
 
 volumes:
   gotham-data:
-  back-code:
-  front-code:
