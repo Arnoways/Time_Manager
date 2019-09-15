@@ -72,7 +72,7 @@ Pour faire fonctionner notre application nous avons une instance EC2 sur AWS.
 Cependant, il peut être utile de vérifier que les changements de notre code ne
 casse pas l'intégrité de notre application.  
 Pour cela nous avons mis en place de la CI grâce à Jarvis qui va build automatiquement
-nos images et procéder à quelques tests simples afin de voir si certaines fonctionnalités 
+nos images [ici](https://travis-ci.org/Arnoways/Time_Manager) et procéder à quelques tests simples afin de voir si certaines fonctionnalités 
 sont toujours opérationnelles. Ce dernier va se déclencher à chaque push sur la ou les branches désignées.
 Le fichier de configuration se trouve [ici](.travis.yml).
 
