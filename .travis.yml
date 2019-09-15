@@ -26,6 +26,8 @@ deploy:
   provider: script
   skip-cleanup: true
   script: ssh -i "/tmp/arno.pem" ubuntu@ec2-54-87-37-72.compute-1.amazonaws.com sh ~/Time_Manager/scripts/deploy.sh
+  on:
+    branch: devops
 
 
 notifications:
