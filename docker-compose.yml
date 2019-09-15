@@ -12,8 +12,32 @@ services:
       - front-network
     # using volume so we don't have to rebuild container after code modifications
     volumes:
-      - front-code:/app
+      - ./time_manager_front:/app
     restart: unless-stopped
+
+  nginx:
+    image: nginx:1.17.3
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    networks:
+      - front-network
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    networks:
+      - front-network
+    restart: unless-stopped
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   back:
     build:
@@ -29,7 +53,7 @@ services:
       - front-network
     # using volume so we don't have to rebuild container after code modifications
     volumes:
-      - back-code:/usr/app/time_manager/
+      - ./time_manager_api:/usr/app/time_manager/
     restart: unless-stopped
 
   bdd:
@@ -54,5 +78,3 @@ networks:
 
 volumes:
   gotham-data:
-  back-code:
-  front-code:
