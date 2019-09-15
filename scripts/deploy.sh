@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# deploy new changes to our server
 set -xe
 
 BRANCH=devops
