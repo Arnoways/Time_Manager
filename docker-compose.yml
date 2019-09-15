@@ -13,6 +13,7 @@ services:
     # using volume so we don't have to rebuild container after code modifications
     volumes:
       - front-code:/app
+    restart: unless-stopped
 
   back:
     build:
@@ -29,6 +30,7 @@ services:
     # using volume so we don't have to rebuild container after code modifications
     volumes:
       - back-code:/usr/app/time_manager/
+    restart: unless-stopped
 
   bdd:
     image: postgres:latest
@@ -44,6 +46,7 @@ services:
     # volume for persistent database data
     volumes: 
       - gotham-data:/var/lib/postgresql/data
+    restart: unless-stopped
 
 networks:
   back-network:
