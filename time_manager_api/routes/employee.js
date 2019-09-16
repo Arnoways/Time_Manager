@@ -16,11 +16,12 @@ router.get('/:id', (req, res, next) =>
 
 /* GET all users unless email&username are specified*/
 router.get('/', function(req, res, next) {
-        if (req.query.email != null && req.query.username != null) {
+        if (req.query.email != null && req.query.first_name != null && req.query.last_name != null) {
                 models.Employee.findAll({
                     where: {
                         email: req.query.email,
-                        username: req.query.username
+                        first_name: req.query.first_name,
+                        last_name: req.query.last_name
                     }
                 })
                 .then(result => res.send(result))
@@ -46,7 +47,8 @@ router.post('/', function(req, res, next) {
                 return
         }
         models.Employee.create({
-                username: req.body.username,
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
                 password: req.body.password, 
                 email: req.body.email,
                 roleId: req.body.roleId})
@@ -59,7 +61,8 @@ router.post('/', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
         models.Employee.update({
-                username: req.body.username,
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
                 password: req.body.password, 
                 email: req.body.email,
                 roleId: req.body.roleId}, {

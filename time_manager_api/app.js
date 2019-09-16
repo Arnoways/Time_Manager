@@ -9,7 +9,8 @@ var employeesRouter = require('./routes/employee');
 var rolesRouter = require('./routes/roles');
 var clocksRouter = require('./routes/clock');
 var workingTimeRouter = require('./routes/workingtime');
-
+var teamsRouter = require('./routes/teams');
+var teamsContentRouter = require('./routes/teamcontent');
 var app = express();
 
 // view engine setup
@@ -26,6 +27,8 @@ app.use('/api/users', employeesRouter);
 app.use('/api/roles', rolesRouter);
 app.use('/api/clocks', clocksRouter);
 app.use('/api/workingtimes', workingTimeRouter);
+app.use('/api/teams', teamsRouter);
+app.use('/api/teamscontent', teamsContentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

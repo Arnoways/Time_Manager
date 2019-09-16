@@ -2,6 +2,6 @@
 
 set -xe
 
-sequelize db:seed:all && \
 sequelize db:migrate && \
+sequelize db:seed:all && \
 exec npm start
