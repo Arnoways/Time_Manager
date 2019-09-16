@@ -23,7 +23,6 @@ script:
   - docker-compose ps
   - sleep 5
   - curl -X GET -I http://localhost:3000/health
-  - sh scripts/create_roles.sh
   - sh scripts/create_dummy_user.sh
 
 # if the build is successful, ssh into the server and execute deploy.sh which 
