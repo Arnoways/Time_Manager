@@ -6,7 +6,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var employeesRouter = require('./routes/employee');
-var rolesRouter = require('./routes/roles');
 var clocksRouter = require('./routes/clock');
 var workingTimeRouter = require('./routes/workingtime');
 var teamsRouter = require('./routes/teams');
@@ -24,7 +23,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', employeesRouter);
-app.use('/api/roles', rolesRouter);
 app.use('/api/clocks', clocksRouter);
 app.use('/api/workingtimes', workingTimeRouter);
 app.use('/api/teams', teamsRouter);

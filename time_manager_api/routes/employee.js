@@ -51,7 +51,7 @@ router.post('/', function(req, res, next) {
                 last_name: req.body.last_name,
                 password: req.body.password, 
                 email: req.body.email,
-                roleId: req.body.roleId})
+                role: capitalize(req.body.role)})
         .then(result => res.send(result))
         .catch((err) => {
                 console.error(err)
@@ -65,7 +65,7 @@ router.put('/:id', function(req, res, next) {
                 last_name: req.body.last_name,
                 password: req.body.password, 
                 email: req.body.email,
-                roleId: req.body.roleId}, {
+                role: capitalize(req.body.role)}, {
                 where: {id: req.params.id}
                 })
         .then(result => res.status(201).send(result))
@@ -85,5 +85,9 @@ router.delete('/:id', function(req, res, next) {
                 return next(err)
         })
 });
+
+function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
 module.exports = router;

@@ -6,7 +6,7 @@ var models = require('../models/index')
 router.post('/', function(req, res, next) {
     models.Employee.findByPk(req.body.managerId)
     .then(function(result) {
-      if (result == null || result.roleId != 2) {
+      if (result == null || result.role !== "Manager") {
         res.status(400).send("User is not a Manager")
         return
       }
@@ -39,6 +39,13 @@ router.get('/:id', (req, res, next) =>
 );
 
 router.put('/:id', function(req, res, next) {
+    models.Employee.findByPk(req.body.managerId)
+    .then(function(result) {
+      if (result == null || result.role !== "Manager") {
+        res.status(400).send("User is not a Manager")
+        return
+      }
+    })
     models.Team.update({
       name: req.body.name,
       managerId: req.body.managerId}, {

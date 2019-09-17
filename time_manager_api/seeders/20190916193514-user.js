@@ -8,7 +8,7 @@ module.exports = {
         last_name: "admin",
         password: "admin",
         email: "admin@admin.com",
-        roleId: 1,
+        role: "Administrator",
         createdAt: new Date(),
         updatedAt: new Date()
       }

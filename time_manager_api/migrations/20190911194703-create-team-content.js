@@ -10,11 +10,19 @@ module.exports = {
       },
       teamId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Teams',
+          key: 'id'
+        }
       },
       employeeId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Employees',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

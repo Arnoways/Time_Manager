@@ -22,11 +22,16 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
-      roleId: {
+      role: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        references: {
+          model: 'Roles',
+          key: 'label'
+        }
       },
       createdAt: {
         allowNull: false,
