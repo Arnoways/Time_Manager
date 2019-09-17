@@ -1,7 +1,7 @@
 # declaring the branches we want to build
 branches:
   only:
-  - devops
+  - prod
 # ensure that docker is available on the travis machine
 services:
   - docker
@@ -32,7 +32,7 @@ deploy:
   skip-cleanup: true
   script: ssh -i "/tmp/arno.pem" ubuntu@ec2-54-87-37-72.compute-1.amazonaws.com sh Time_Manager/scripts/deploy.sh
   on:
-    branch: devops
+    branch: prod
 
 # jarvis notifcations are sent via Teams
 notifications:
