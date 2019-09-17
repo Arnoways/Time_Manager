@@ -8,7 +8,7 @@ services:
 
 # our ec2 hostname
 addons:
-  ssh_known_hosts: ec2-35-173-204-52.compute-1.amazonaws.com
+  ssh_known_hosts: ec2-3-95-86-222.compute-1.amazonaws.com
 # decrypt the .pem file which is necessary in order to ssh into our ec2 server.
 before_install:
   - openssl aes-256-cbc -K $encrypted_0af220062a29_key -iv $encrypted_0af220062a29_iv -in arno.pem.enc -out /tmp/arno.pem -d
@@ -29,7 +29,7 @@ script:
 deploy:
   provider: script
   skip-cleanup: true
-  script: ssh -i "/tmp/arno.pem" ubuntu@ec2-35-173-204-52.compute-1.amazonaws.com sh Time_Manager/scripts/deploy.sh
+  script: ssh -i "/tmp/arno.pem" ubuntu@ec2-3-95-86-222.compute-1.amazonaws.com sh Time_Manager/scripts/deploy.sh
   on:
     branch: prod
 
