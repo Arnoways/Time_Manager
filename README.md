@@ -82,5 +82,5 @@ Le fichier de configuration se trouve [ici](.travis.yml).
 
 ### Scripts
 [create_dummy_user.sh](./scripts/create_dummy_user.sh) -> crée un fake employé dans la base en passant par l'api avec le rôle "employé".  
-[deploy.sh](./scripts/deploy.sh) -> update le repo sur la branche spécifié et relance les conteneurs.
+[deploy.sh](./scripts/deploy.sh) -> update le repo sur la branche spécifié et relance les conteneurs.  
 [reset.sh](./scripts/reset.sh) -> :warning: Supprime les conteneurs ET les volumes (i.e: perte de data de la bdd) puis relance tout.
