@@ -13,6 +13,7 @@ services:
     # using volume so we don't have to rebuild container after code modifications
     volumes:
       - ./time_manager_front:/app
+      - /app/node_modules
     restart: unless-stopped
 
 

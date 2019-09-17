@@ -1,0 +1,4 @@
+[submodule "time_manager_front"]
+	path = time_manager_front
+	url = https://github.com/red-56/front
+	branch = dev
