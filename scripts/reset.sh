@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 set -xe
 
-docker-compose down --rmi all -v --remove-orphans && \
+#deletes containers, networks and volumes 
+
+docker-compose down -v --remove-orphans && \
 docker volume prune --force && \
 docker-compose up -d bdd && \
 docker-compose build && \
