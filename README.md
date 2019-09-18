@@ -1,4 +1,4 @@
-# Time_manager_API
+# Time_manager
 [![Build Status](https://travis-ci.org/Arnoways/Time_Manager.svg?branch=prod)](https://travis-ci.org/Arnoways/Time_Manager)
 
 ## Readme for the: DevOps branch
