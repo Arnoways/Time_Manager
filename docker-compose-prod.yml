@@ -4,15 +4,13 @@ services:
   front:
     build:
       context: ./time_manager_front
+      dockerfile: Dockerfile-prod
     # bind host machine port 8080 to the 8080 port of the container
     ports:
-      - "8080:8080"
+      - "8080:80"
     # specify network so frontend can't access directly to the database
     networks:
       - front-network
-    volumes:
-      - ./time_manager_front:/app
-      - /app/node_modules
     restart: unless-stopped
 
   back:
