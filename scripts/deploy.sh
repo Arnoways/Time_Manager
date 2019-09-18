@@ -9,6 +9,6 @@ cd ~/Time_Manager && \
 git pull && \
 git checkout ${BRANCH} && \
 git submodule init && \
-git submodule update --remote && \
+git submodule update --remote --force && \
 docker-compose build && \
 docker-compose up -d
