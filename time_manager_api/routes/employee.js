@@ -7,7 +7,7 @@ var emailRegex = /[^@]+@[^\.]+\..+/
 
 /* GET one employee by id. */
 router.get('/:id', (req, res, next) =>
-        models.Employee.findByPk(req.params.id)
+        models.Employee.findByPk(req.params.id, {attributes: {exclude: ['password']}})
         .then(result => res.json(result))
         .catch(err => {
                 console.error(err)
@@ -18,7 +18,7 @@ router.get('/:id', (req, res, next) =>
 /* GET all users unless email&username are specified*/
 router.get('/', function(req, res, next) {
         if (req.query.email != null && req.query.first_name != null && req.query.last_name != null) {
-                models.Employee.findAll({
+                models.Employee.findAll({ attributes: {exclude: ['password']}}, {
                     where: {
                         email: req.query.email,
                         first_name: req.query.first_name,
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
                     return next(error)
                 })
         } else {
-            models.Employee.findAll()
+            models.Employee.findAll({ attributes: {exclude: ['password']}})
             .then(result => res.send(result))
             .catch(err => {
                 console.error(err)
@@ -58,7 +58,12 @@ router.post('/', function(req, res, next) {
                         password: hash,
                         email: req.body.email,
                         role: capitalize(req.body.role)})
-                .then(result => res.send(result))
+                .then(result => res.status(201).send({
+                        id: result.id,
+                        first_name: result.first_name,
+                        last_name: result.last_name,
+                        email: result.email,
+                        role: result.role}))
                 .catch((err) => {
                         console.error(err)
                         return next(err)
@@ -84,11 +89,28 @@ router.put('/:id', function(req, res, next) {
                 role: capitalize(req.body.role)}, {
                 where: {id: req.params.id}
                 })
-        .then(result => res.status(201).send(result))
+        .then(result => res.status(201).send({
+                id: result.id,
+                first_name: result.first_name,
+                last_name: result.last_name,
+                email: result.email,
+                role: result.role}))
         .catch((err) => {
                 console.error(err)
                 return next(err)
         })
+        })
+});
+
+router.patch('/:id', function(req, res, next) {
+        models.Employee.update({
+                role: capitalize(req.body.role)}, {
+                where: {id: req.params.id}
+                })
+        .then(result => res.status(201).send({id: result.id, role: result.role}))
+        .catch((err) => {
+                console.error(err)
+                return next(err)
         })
 });
 
