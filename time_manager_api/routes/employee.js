@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../models/index')
 const bcrypt = require('bcrypt');
 
-var emailRegex = /[^@]+@[^\.]+\..+/
+var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 /* GET one employee by id. */
 router.get('/:id', (req, res, next) =>
