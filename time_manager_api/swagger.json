@@ -1,0 +1,227 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Timepool API",
+    "description": "Backend API for the Time Manager project. See https://github.com/Arnoways/Time_Manager"
+  },
+  "host": "localhost",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Employee"
+    },
+    {
+      "name": "Teams"
+    },
+    {
+      "name": "TeamContent"
+    },
+    {
+      "name": "Clocks"
+    },
+    {
+      "name": "WorkingTimes"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Add a new employee in the database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Employee object that needs to be added to the db.",
+            "schema": {
+              "required": [
+                "first_name",
+                "last_name",
+                "password",
+                "email",
+                "role"
+              ],
+              "properties": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Employee succesfully created."
+          },
+          "400": {
+            "description": "Bad email format."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Gets all employees from the database.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of employees",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Gets an employee.",
+        "description": "Return a single employee from its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An employee.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Update an existing employee in the databse.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Employee object that needs to be updated in the db.",
+            "schema": {
+              "required": [
+                "first_name",
+                "last_name",
+                "password",
+                "email",
+                "role"
+              ],
+              "properties": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Employee succesfully updated."
+          },
+          "400": {
+            "description": "Bad email format."
+          }
+        }
+      }
+    }
+  }
+}

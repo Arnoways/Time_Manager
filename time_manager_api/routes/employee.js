@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
+const bcrypt = require('bcrypt');
 
 var emailRegex = /[^@]+@[^\.]+\..+/
 
@@ -46,24 +47,39 @@ router.post('/', function(req, res, next) {
                 res.status(400).send("Bad email format.")
                 return
         }
-        models.Employee.create({
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                password: req.body.password, 
-                email: req.body.email,
-                role: capitalize(req.body.role)})
-        .then(result => res.send(result))
-        .catch((err) => {
-                console.error(err)
-                return next(err)
+        bcrypt.hash(req.body.password, 10, function(err, hash) {
+                if (err) {
+                        console.error(err)
+                        return next(err)
+                }
+                models.Employee.create({
+                        first_name: req.body.first_name,
+                        last_name: req.body.last_name,
+                        password: hash,
+                        email: req.body.email,
+                        role: capitalize(req.body.role)})
+                .then(result => res.send(result))
+                .catch((err) => {
+                        console.error(err)
+                        return next(err)
+                })
         })
 });
 
 router.put('/:id', function(req, res, next) {
+        if (! emailRegex.test(req.body.email)) {
+                res.status(400).send("Bad email format.")
+                return
+        }
+        bcrypt.hash(req.body.password, 10, function(err, hash) {
+                if (err) {
+                        console.error(err)
+                        return next(err)
+                }
         models.Employee.update({
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
-                password: req.body.password, 
+                password: hash, 
                 email: req.body.email,
                 role: capitalize(req.body.role)}, {
                 where: {id: req.params.id}
@@ -72,6 +88,7 @@ router.put('/:id', function(req, res, next) {
         .catch((err) => {
                 console.error(err)
                 return next(err)
+        })
         })
 });
 
