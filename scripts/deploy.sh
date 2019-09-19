@@ -11,4 +11,4 @@ git checkout ${BRANCH} && \
 git submodule init && \
 git submodule update --remote --force && \
 docker-compose -f docker-compose-prod.yml build && \
-docker-compose -f docker-compose-prod.yml up -d
+docker-compose -f docker-compose-prod.yml restart
