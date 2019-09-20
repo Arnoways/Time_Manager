@@ -4,20 +4,39 @@ var models = require('../models/index')
 
 router.get('/:id', (req, res, next) =>
         models.Clock.findByPk(req.params.id)
-        .then(result => res.json(result))
+        .then(result => res.send(result))
         .catch(err => {
                 console.error(err)
                 return next(err)
         })
 );
 
-router.post('/:userID', (req, res, next) =>
+router.get('/', (req, res, next) => 
+        models.Clock.findAll()
+        .then(result => res.send(result))
+        .catch(err => {
+                console.error(err)
+                return next(err)
+        })
+);
+
+// get clock from userid
+router.get('/user/:userId', (req, res, next) =>
+        models.Clock.findOne({where: {employeeId: req.params.userId}})
+        .then(result => res.send(result))
+        .catch(err => {
+                console.error(err)
+                return next(err)
+        })
+);
+
+router.post('/user/:userId', (req, res, next) =>
         models.Clock.create({
           time: req.body.time,
           status: req.body.status,
-          employeeId: req.params.userID
+          employeeId: req.params.userId
         })
-        .then(result => res.json(result))
+        .then(result => res.send(result))
         .catch(err => {
                 console.error(err)
                 return next(err)
@@ -31,31 +50,22 @@ router.put('/:id', function(req, res, next) {
           employeeId: req.body.employeeId}, {
           where: {id: req.params.id}
         })
-        .then(result => res.json(result))
+        .then(result => res.status(201).send(result))
         .catch(err => {
                 console.error(err)
                 return next(err)
         })
 });
 
-// router.patch('/:id', function(req, res, next) {
-//         var old_status = null;
-//         var old_time = null;
-//         models.Clock.findByPk(req.params.id)
-//         .then(result => old_status = result.status)
-//         if (old_status != req.body.status) {
-//           models.Clock.update({
-//             time: req.body.time,
-//             status: req.body.status}, {
-//             where: {id: req.params.id}
-//           })
-//           .then()
-//           .then(result => res.json(result))
-//           .catch(err => {
-//             console.error(err)
-//             return next(err)
-//           })
-//         }
-// });
+router.delete('/:id', function(req, res, next) {
+        models.Clock.destroy({where: {id: req.params.id}})
+        .then(() => {
+                res.status(200).send('Deleted clock with id : ' + req.params.id)
+        })
+        .catch((err) => {
+                console.error(err)
+                return next(err)
+        })
+});
 
 module.exports = router;

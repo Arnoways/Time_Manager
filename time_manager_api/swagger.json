@@ -15,7 +15,7 @@
       "name": "Teams"
     },
     {
-      "name": "TeamContent"
+      "name": "TeamsContent"
     },
     {
       "name": "Clocks"
@@ -44,38 +44,19 @@
           {
             "in": "body",
             "name": "body",
+            "required": true,
             "description": "Employee object that needs to be added to the db.",
             "schema": {
-              "required": [
-                "first_name",
-                "last_name",
-                "password",
-                "email",
-                "role"
-              ],
-              "properties": {
-                "first_name": {
-                  "type": "string"
-                },
-                "last_name": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/EmployeeReq"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Employee succesfully created."
+            "description": "Employee succesfully created.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeRes"
+            }
           },
           "400": {
             "description": "Bad email format."
@@ -96,24 +77,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "role": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/definitions/EmployeeRes"
               }
             }
           }
@@ -140,24 +104,7 @@
           "200": {
             "description": "An employee.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "first_name": {
-                  "type": "string"
-                },
-                "last_name": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/EmployeeRes"
             }
           }
         }
@@ -166,7 +113,7 @@
         "tags": [
           "Employee"
         ],
-        "summary": "Update an existing employee in the databse.",
+        "summary": "Update an existing employee in the database.",
         "consumes": [
           "application/json"
         ],
@@ -186,26 +133,48 @@
             "name": "body",
             "description": "Employee object that needs to be updated in the db.",
             "schema": {
-              "required": [
-                "first_name",
-                "last_name",
-                "password",
-                "email",
-                "role"
-              ],
+              "$ref": "#/definitions/EmployeeReq"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Employee succesfully updated.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeRes"
+            }
+          },
+          "400": {
+            "description": "Bad email format."
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Update an existing employee's ROLE in the database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Employee object that needs to be updated in the db.",
+            "schema": {
               "properties": {
-                "first_name": {
-                  "type": "string"
-                },
-                "last_name": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
                 "role": {
                   "type": "string"
                 }
@@ -215,11 +184,930 @@
         ],
         "responses": {
           "201": {
-            "description": "Employee succesfully updated."
+            "description": "Employee's role succesfully updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete an existing employee from the database.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted employee with id X"
+          }
+        }
+      }
+    },
+    "/clocks": {
+      "get": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Get all the clocks!",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of clocks",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Clock"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clocks/{id}": {
+      "get": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Get one specific Clock.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Clocks' id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A clock",
+            "schema": {
+              "$ref": "#/definitions/Clock"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Update a specific clock.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Clocks' id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Employee object that needs to be updated in the db.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Clock updated",
+            "schema": {
+              "$ref": "#/definitions/Clock"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Delete a specific clock.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Clocks' id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted clock with id X"
+          }
+        }
+      }
+    },
+    "/clocks/user/{userid}": {
+      "get": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Get a clock by specifying its userId",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A clock",
+            "schema": {
+              "$ref": "#/definitions/Clock"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Insert a clock for a specific user.",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Clock object to insert in the database for the specified user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean"
+                },
+                "time": {
+                  "type": "string"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Clock created.",
+            "schema": {
+              "$ref": "#/definitions/Clock"
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "summary": "Get all the teams!",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of clocks.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Team"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Teams"
+        ],
+        "summary": "Create a team in the database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Team object to insert in the database.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "managerId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Team has been created.",
+            "schema": {
+              "$ref": "#/definitions/Team"
+            }
           },
           "400": {
-            "description": "Bad email format."
+            "description": "User is not a manager."
           }
+        }
+      }
+    },
+    "/teams/{id}": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "summary": "Get a specific team with its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A team",
+            "schema": {
+              "$ref": "#/definitions/Team"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Teams"
+        ],
+        "summary": "Update a specific team.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Team object to updated in the database.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "managerId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Team has been updated.",
+            "schema": {
+              "$ref": "#/definitions/Team"
+            }
+          },
+          "400": {
+            "description": "User is not a manager."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Teams"
+        ],
+        "summary": "Delete a specific team.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Team has been deleted"
+          }
+        }
+      }
+    },
+    "/teamscontent": {
+      "get": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Get all the teams' content!",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of teamscontent.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TeamsContent"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "TeamsContent object to insert in the database.",
+        "description": "TeamsContent takes a teamid and an employeeid so we know which teams an employee is in.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "integer"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TeamContent successfully inserted.",
+            "schema": {
+              "$ref": "#/definitions/TeamsContent"
+            }
+          }
+        }
+      }
+    },
+    "/teamscontent/{id}": {
+      "get": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Get one TeamsContent by its id.",
+        "produces": [
+          "applicaiton/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "TeamsContent id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TeamsContent object.",
+            "schema": {
+              "$ref": "#/definitions/TeamsContent"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Updates a TeamsContent by specifying its id.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "TeamsContent id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "integer"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "TeamsContent successfully updated.",
+            "schema": {
+              "$ref": "#/definitions/TeamsContent"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Delete a TeamsContent by specifying its id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "TeamsContent id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TeamsContent successfully deleted."
+          }
+        }
+      }
+    },
+    "/teamscontent/team/{id}": {
+      "get": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Get all members of the specified team.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Team's id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the specified team's members id.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TeamsContent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teamscontent/user/{id}": {
+      "get": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Get all the teams the specified employee belongs to.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of the teams id the employee is in.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TeamsContent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workingtimes/{id}": {
+      "get": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "Get a workingtime by specifying its id.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "WorkingTime's id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "WorkingTime object",
+            "schema": {
+              "$ref": "#/definitions/WorkingTime"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "Update a specified workingtime.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "WorkingTime's id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "WorkingTime object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "WorkingTime succesfully updated.",
+            "schema": {
+              "$ref": "#/definitions/WorkingTime"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "Delete a WorkingTime by specifying its id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "WorkingTime id",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "WorkingTime successfully deleted."
+          }
+        }
+      }
+    },
+    "/workingtimes/user/{userId}": {
+      "get": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "Get all working times for a specified user, with a time range if specified.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "description": "Employee id.",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "start",
+            "description": "Start of time range if specified.",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "description": "End of time range if specified.",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of working times for the specified user, withing the time range if it was given.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WorkingTime"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "WorkingTime object to be insert for the given user.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "description": "Employee id.",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                },
+                "employeeId": {
+                  "type": "integer"
+                }
+              }
+            },
+            "required": true,
+            "description": "Working Time object."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "WorkingTime successfully created.",
+            "schema": {
+              "$ref": "#/definitions/WorkingTime"
+            }
+          }
+        }
+      }
+    },
+    "/workingtimes/team/{teamId}": {
+      "get": {
+        "tags": [
+          "WorkingTimes"
+        ],
+        "summary": "Get all the working times for a specified team.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teamId",
+            "required": true,
+            "description": "Team id.",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of workingtimes of every employees part of the specified team.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WorkingTime"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EmployeeReq": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "EmployeeRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "Clock": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "boolean"
+        },
+        "time": {
+          "type": "string"
+        },
+        "employeeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "Team": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "managerId": {
+          "type": "integer"
+        }
+      }
+    },
+    "TeamsContent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "teamId": {
+          "type": "integer"
+        },
+        "employeeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "WorkingTime": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        },
+        "employeeId": {
+          "type": "integer"
         }
       }
     }

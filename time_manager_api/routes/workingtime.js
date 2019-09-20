@@ -6,25 +6,26 @@ var Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 /* GET ONE workingtime. */
-router.get('/:userID/:workingtimeID', (req, res, next) =>
-        models.Workingtime.findByPk(req.params.workingtimeID)
-        .then(result => res.json(result))
+router.get('/:id', (req, res, next) =>
+        models.Workingtime.findByPk(req.params.id)
+        .then(result => res.send(result))
         .catch(err => {
                 console.error(err)
                 return next(err)
         })
 );
 
-router.get('/:userID', function(req, res, next) {
+/* Get all working times for a specified user, with a time range if specified */
+router.get('/user/:userId', function(req, res, next) {
         if (req.query.start !== undefined && req.query.end !== undefined) {
           models.Workingtime.findAll({
             where: {
               start: {[Op.gte]: req.query.start},
               end: {[Op.lte]: req.query.end},
-              employeeId: req.params.userID
+              employeeId: req.params.userId
             }
           })
-          .then(result => res.json(result))
+          .then(result => res.send(result))
           .catch(err => {
             console.error(err)
             return next(err)
@@ -32,10 +33,10 @@ router.get('/:userID', function(req, res, next) {
         } else {
           models.Workingtime.findAll({
             where: {
-              employeeId: req.params.userID
+              employeeId: req.params.userId
             }
           })
-          .then(result => res.json(result))
+          .then(result => res.send(result))
           .catch(err => {
             console.log(err)
             return next(err)
@@ -43,13 +44,40 @@ router.get('/:userID', function(req, res, next) {
         }
 });
 
-router.post('/:userID', (req, res, next) =>
+
+/* gets all the working times for a specified team */
+router.get('/team/:teamId', function(req, res, next) {
+    models.TeamContent.findAll({
+      where: {teamId: req.params.id}
+    })
+    .then(function(result) {
+      var employees = []
+      result.forEach(employeeId => {
+        employees.push(employeeId);
+      });
+    })
+    .then(models.Workingtime.findAll({
+      where: {
+        employeeId: {
+          [Op.in]: employees
+        }
+      }
+    })).then(result => res.send(result))
+    .catch((err) => {
+      console.error(err)
+      return next(err)
+  })
+})
+
+
+/* creates a workingtime new working time for an employee*/
+router.post('/user/:userId', (req, res, next) =>
         models.Workingtime.create({
           start: req.body.start,
           end: req.body.end,
-          employeeId: req.params.userID
+          employeeId: req.params.userId
         })
-        .then(result => res.json(result))
+        .then(result => res.send(result))
         .catch(err => {
                 console.error(err)
                 return next(err)
@@ -63,7 +91,7 @@ router.put('/:id', (req, res, next) =>
           employeeId: req.body.employeeId}, {
             where: {id: req.params.id}
           })
-        .then(result => res.json(result))
+        .then(result => res.send(result))
         .catch(err => {
             console.error(err)
             return next(err)

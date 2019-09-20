@@ -8,7 +8,7 @@ router.post('/', (req, res, next) =>
             teamId: req.body.teamId, 
             employeeId: req.body.employeeId
         })
-    .then((result) => res.json(result))
+    .then((result) => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -17,7 +17,7 @@ router.post('/', (req, res, next) =>
 
 router.get('/', (req, res, next) =>
     models.TeamContent.findAll()
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -27,7 +27,7 @@ router.get('/', (req, res, next) =>
 
 router.get('/:id', (req, res, next) =>
     models.TeamContent.findByPk(req.params.id)
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -39,7 +39,7 @@ router.get('/user/:id', (req, res, next) =>
     models.TeamContent.findAll({
             where: {employeeId: req.params.id}
     })
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -51,7 +51,7 @@ router.get('/team/:id', (req, res, next) =>
     models.TeamContent.findAll({
             where: {teamId: req.params.id}
     })
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)

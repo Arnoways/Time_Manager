@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
       }
     })
     models.Team.create({name: req.body.name, managerId: req.body.managerId})
-    .then((result) => res.json(result))
+    .then((result) => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
 
 router.get('/', (req, res, next) =>
     models.Team.findAll()
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
@@ -31,7 +31,7 @@ router.get('/', (req, res, next) =>
 
 router.get('/:id', (req, res, next) =>
     models.Team.findByPk(req.params.id)
-    .then(result => res.json(result))
+    .then(result => res.send(result))
     .catch((err) => {
             console.error(err)
             return next(err)
