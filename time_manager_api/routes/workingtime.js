@@ -44,6 +44,19 @@ router.get('/user/:userId', function(req, res, next) {
         }
 });
 
+/* creates a workingtime new working time for an employee*/
+router.post('/user/:userId', (req, res, next) =>
+        models.Workingtime.create({
+          start: req.body.start,
+          end: req.body.end,
+          employeeId: req.params.userId
+        })
+        .then(result => res.send(result))
+        .catch(err => {
+                console.error(err)
+                return next(err)
+        })
+);
 
 /* gets all the working times for a specified team */
 router.get('/team/:teamId', function(req, res, next) {
@@ -68,21 +81,6 @@ router.get('/team/:teamId', function(req, res, next) {
       return next(err)
   })
 })
-
-
-/* creates a workingtime new working time for an employee*/
-router.post('/user/:userId', (req, res, next) =>
-        models.Workingtime.create({
-          start: req.body.start,
-          end: req.body.end,
-          employeeId: req.params.userId
-        })
-        .then(result => res.send(result))
-        .catch(err => {
-                console.error(err)
-                return next(err)
-        })
-);
 
 router.put('/:id', (req, res, next) =>
         models.Workingtime.update({
