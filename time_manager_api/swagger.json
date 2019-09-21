@@ -270,54 +270,6 @@
           }
         }
       },
-      "put": {
-        "tags": [
-          "Clocks"
-        ],
-        "summary": "Update a specific clock.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Clocks' id",
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Employee object that needs to be updated in the db.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "boolean"
-                },
-                "time": {
-                  "type": "string"
-                },
-                "employeeId": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Clock updated",
-            "schema": {
-              "$ref": "#/definitions/Clock"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Clocks"
@@ -409,6 +361,55 @@
         "responses": {
           "201": {
             "description": "Clock created.",
+            "schema": {
+              "$ref": "#/definitions/Clock"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Clocks"
+        ],
+        "summary": "Update one user's clock.",
+        "description": "When status goes from true to false, creates a workingtime for the employee.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Employee's id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Clock object that needs to be updated in the db.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean"
+                },
+                "time": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nothing to update"
+          },
+          "201": {
+            "description": "Clock updated",
             "schema": {
               "$ref": "#/definitions/Clock"
             }

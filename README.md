@@ -1,7 +1,8 @@
 # Time_manager
 [![Build Status](https://travis-ci.org/Arnoways/Time_Manager.svg?branch=prod)](https://travis-ci.org/Arnoways/Time_Manager)
 
-## Readme for the: DevOps branch
+## API Documentation
+http://timepool.me:3000/api-docs
 
 To-do: traduire en anglais.
 

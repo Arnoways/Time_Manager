@@ -12,7 +12,13 @@ router.post('/', function(req, res, next) {
       }
     })
     models.Team.create({name: req.body.name, managerId: req.body.managerId})
-    .then((result) => res.send(result))
+    .then(function(result) {
+      models.TeamContent.create({
+        teamId: result.id,
+        employeeId: result.managerId
+      })
+      res.send(result)
+    })
     .catch((err) => {
             console.error(err)
             return next(err)

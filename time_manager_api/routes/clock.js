@@ -33,7 +33,7 @@ router.get('/user/:userId', (req, res, next) =>
 router.post('/user/:userId', (req, res, next) =>
         models.Clock.create({
           time: req.body.time,
-          status: req.body.status,
+          status: false,
           employeeId: req.params.userId
         })
         .then(result => res.send(result))
@@ -43,19 +43,41 @@ router.post('/user/:userId', (req, res, next) =>
         })
 );
 
-router.put('/:id', function(req, res, next) {
-        models.Clock.update({
-          time: req.body.time,
-          status: req.body.status,
-          employeeId: req.body.employeeId}, {
-          where: {id: req.params.id}
+/* Updates a clock by specifying the userId   */
+router.patch('/user/:userId', (req, res, next) =>
+        models.Clock.findOne({where: {employeeId: req.params.userId}})
+        .then(function(result) {
+                if (result.status && !req.body.status) {
+                        models.WorkingTime.create({
+                            start: result.time,
+                            end: req.body.time,
+                            employeeId: req.params.userId
+                        })
+                        .catch(err => {
+                                console.error(err)
+                                return next(err)
+                        })
+                }
+                /* if status doesn't change, no need to update. */
+                if (result.status !== req.body.status) {
+                        models.Clock.update({
+                                time: req.body.time,
+                                status: req.body.status}, {
+                                where: {id: req.params.id}
+                              })
+                              .then(result => res.status(201).send(result))
+                              .catch(err => {
+                                      console.error(err)
+                                      return next(err)
+                              })
+                }
+                res.status(200).send("Nothing to update.")
+                .catch(err => {
+                        console.error(err)
+                        return next(err)
+                })
         })
-        .then(result => res.status(201).send(result))
-        .catch(err => {
-                console.error(err)
-                return next(err)
-        })
-});
+);
 
 router.delete('/:id', function(req, res, next) {
         models.Clock.destroy({where: {id: req.params.id}})
