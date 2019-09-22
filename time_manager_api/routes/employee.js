@@ -73,7 +73,7 @@ router.post('/sign_in', function(req, res, next) {
       });
       
 /* POST - creates one employee */
-router.post('/sing_up', function(req, res, next) {
+router.post('/sign_up', function(req, res, next) {
 if (! emailRegex.test(req.body.email)) {
         res.status(400).send("Bad email format.")
         return
