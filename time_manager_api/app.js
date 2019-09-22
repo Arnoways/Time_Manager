@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(expressJwt({secret: jwtSecret}).unless({path: ['/api/users/sign_in', '/api/users/sign_up', '/', '/health']}))
+app.use(expressJwt({secret: jwtSecret}).unless({path: ['/api/users/sign_in', '/api/users/sign_up', '/', '/health', '/api-docs', '/swagger-stats/metrics', '/swagger-stats/ui']}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

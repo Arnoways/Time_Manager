@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models/index')
+var models = require('../models/index');
+var permit = require('../config/permission');
 
 /* POST teamcontent. */
 router.post('/', permit.roleCheck('Administrator', 'Manager'), (req, res, next) =>

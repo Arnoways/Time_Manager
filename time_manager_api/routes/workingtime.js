@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
 var Sequelize = require('sequelize');
+var permit = require('../config/permission');
 
 const Op = Sequelize.Op;
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
+var permit = require('../config/permission');
 
 router.get('/:id', (req, res, next) =>
         models.Clock.findByPk(req.params.id)
