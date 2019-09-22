@@ -22,6 +22,7 @@ services:
     # using env variable to speed up API as it is advised in documentation
     environment:
       - NODE_ENV=production
+      - JWT_SECRET="4h4PgYCWknlw176E"
     networks:
       - back-network
       - front-network

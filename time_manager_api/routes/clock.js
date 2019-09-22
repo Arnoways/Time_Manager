@@ -11,7 +11,7 @@ router.get('/:id', (req, res, next) =>
         })
 );
 
-router.get('/', (req, res, next) => 
+router.get('/', permit.roleCheck('Administrator', 'Manager'), (req, res, next) => 
         models.Clock.findAll()
         .then(result => res.send(result))
         .catch(err => {
