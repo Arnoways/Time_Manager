@@ -47,6 +47,33 @@ services:
       - gotham-data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  bdd_exporter:
+    image: wrouesnel/postgres_exporter
+    depends_on:
+      - bdd
+    networks:
+      - back-network
+    environment:
+      - "DATA_SOURCE_URI=bdd:5432/postgres?sslmode=disable"
+      - "DATA_SOURCE_USER=postgres"
+      - "DATA_SOURCE_PASS=postgres"
+    expose:
+      - 9187
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    expose:
+    - 8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - back-network
+
+
 networks:
   back-network:
   front-network:
