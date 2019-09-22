@@ -29,40 +29,6 @@
   ],
   "paths": {
     "/users": {
-      "post": {
-        "tags": [
-          "Employee"
-        ],
-        "summary": "Add a new employee in the database.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "description": "Employee object that needs to be added to the db.",
-            "schema": {
-              "$ref": "#/definitions/EmployeeReq"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Employee succesfully created.",
-            "schema": {
-              "$ref": "#/definitions/EmployeeRes"
-            }
-          },
-          "400": {
-            "description": "Bad email format."
-          }
-        }
-      },
       "get": {
         "tags": [
           "Employee"
@@ -221,6 +187,78 @@
         }
       }
     },
+    "/users/sign_up": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Add a new employee in the database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Employee object that needs to be added to the db. Role is employee by default.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeReq"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Employee succesfully created.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeRes"
+            }
+          },
+          "400": {
+            "description": "Bad email format."
+          }
+        }
+      }
+    },
+    "/users/sign_in": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get a JWT access token by logging in.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Employee object that needs to be added to the db. Role is employee by default.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeReq"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Employee succesfully created.",
+            "schema": {
+              "$ref": "#/definitions/EmployeeRes"
+            }
+          },
+          "400": {
+            "description": "Bad email format."
+          }
+        }
+      }
+    },
     "/clocks": {
       "get": {
         "tags": [
@@ -291,7 +329,7 @@
         }
       }
     },
-    "/clocks/user/{userid}": {
+    "/clocks/user/{userId}": {
       "get": {
         "tags": [
           "Clocks"
@@ -299,7 +337,7 @@
         "summary": "Get a clock by specifying its userId",
         "parameters": [
           {
-            "name": "userid",
+            "name": "userId",
             "in": "path",
             "required": true,
             "description": "User id",
@@ -325,7 +363,7 @@
         "summary": "Insert a clock for a specific user.",
         "parameters": [
           {
-            "name": "userid",
+            "name": "userId",
             "in": "path",
             "required": true,
             "description": "User id",
@@ -371,8 +409,8 @@
         "tags": [
           "Clocks"
         ],
-        "summary": "Update one user's clock.",
-        "description": "When status goes from true to false, creates a workingtime for the employee.",
+        "summary": "Update a specific clock.",
+        "description": "Will also create a workingtime when status goes from true to false.",
         "consumes": [
           "application/json"
         ],
@@ -381,16 +419,16 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
-            "description": "Employee's id",
+            "description": "User id",
             "type": "integer"
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Clock object that needs to be updated in the db.",
+            "description": "Employee object that needs to be updated in the db.",
             "schema": {
               "type": "object",
               "properties": {
@@ -406,7 +444,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Nothing to update"
+            "description": "Nothing to update."
           },
           "201": {
             "description": "Clock updated",
@@ -1023,9 +1061,6 @@
           "type": "string"
         },
         "email": {
-          "type": "string"
-        },
-        "role": {
           "type": "string"
         }
       }
