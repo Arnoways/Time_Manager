@@ -59,10 +59,10 @@ services:
       - "DATA_SOURCE_PASS=postgres"
     expose:
       - 9187
+    restart: unless-stopped
 
   cadvisor:
     image: google/cadvisor:latest
-    container_name: cadvisor
     expose:
     - 8080
     volumes:
@@ -72,7 +72,17 @@ services:
     - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - back-network
+    restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+     - "9090:9090"
+    networks:
+      - back-network
+    volumes:
+      - ./prometheus:/etc/prometheus/
+    restart: unless-stopped
 
 networks:
   back-network:

@@ -1,0 +1,22 @@
+---
+
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: cadvisor
+    static_configs:
+      - targets: 
+        - cadvisor:8080
+
+  - job_name: postgres
+    static_configs:
+      - targets:
+        - bdd_exporter:9187
+  
+  - job_name: nodejs
+    static_configs:
+      - targets:
+        - back:3000
+    metrics_path: /swagger-stats/metrics
