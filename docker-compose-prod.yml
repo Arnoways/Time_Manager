@@ -109,8 +109,6 @@ services:
       - back-network
     volumes:
       - ./prometheus:/etc/prometheus/
-    command:
-      - '--storage.tsdb.retention.time=10d'
     restart: unless-stopped
     logging:
       driver: "json-file"
