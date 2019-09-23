@@ -4,12 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+/* swagger */
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
- 
+var swStats = require('swagger-stats');
+
+/* JWT */
 var expressJwt = require('express-jwt');
 var jwtSecret = process.env.JWT_SECRET;
 
+/* route stuff */
 var indexRouter = require('./routes/index');
 var employeesRouter = require('./routes/employee');
 var clocksRouter = require('./routes/clock');
@@ -25,7 +29,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(swStats.getMiddleware({swaggerSpec: swaggerDocument}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(expressJwt({secret: jwtSecret}).unless({path: ['/api/users/sign_in', '/api/users/sign_up', '/', '/health', '/api-docs', '/swagger-stats/metrics', '/swagger-stats/ui']}))
 app.use(express.static(path.join(__dirname, 'public')));
 

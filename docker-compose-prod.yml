@@ -48,6 +48,43 @@ services:
       - gotham-data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  bdd_exporter:
+    image: wrouesnel/postgres_exporter
+    depends_on:
+      - bdd
+    networks:
+      - back-network
+    environment:
+      - "DATA_SOURCE_URI=bdd:5432/postgres?sslmode=disable"
+      - "DATA_SOURCE_USER=postgres"
+      - "DATA_SOURCE_PASS=postgres"
+    expose:
+      - 9187
+    restart: unless-stopped
+
+  cadvisor:
+    image: google/cadvisor:latest
+    expose:
+    - 8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - back-network
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+     - "9090:9090"
+    networks:
+      - back-network
+    volumes:
+      - ./prometheus:/etc/prometheus/
+    restart: unless-stopped
+
 networks:
   back-network:
   front-network:
