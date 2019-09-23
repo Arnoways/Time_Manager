@@ -12,6 +12,12 @@ services:
     networks:
       - front-network
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
 
   back:
     build:
@@ -31,6 +37,11 @@ services:
       - ./time_manager_api:/usr/app/time_manager/
       - /usr/app/time_manager/node_modules
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   bdd:
     image: postgres:latest
@@ -47,6 +58,11 @@ services:
     volumes: 
       - gotham-data:/var/lib/postgresql/data
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   bdd_exporter:
     image: wrouesnel/postgres_exporter
@@ -61,6 +77,11 @@ services:
     expose:
       - 9187
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "3"
 
   cadvisor:
     image: google/cadvisor:latest
@@ -74,6 +95,11 @@ services:
     networks:
       - back-network
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "3"
 
   prometheus:
     image: prom/prometheus
@@ -83,7 +109,14 @@ services:
       - back-network
     volumes:
       - ./prometheus:/etc/prometheus/
+    command:
+      - '--storage.tsdb.retention.time=10d'
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "3"
 
 networks:
   back-network:
