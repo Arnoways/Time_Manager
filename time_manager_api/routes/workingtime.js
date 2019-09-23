@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
 var Sequelize = require('sequelize');
+var permit = require('../config/permission');
 
 const Op = Sequelize.Op;
 
@@ -59,7 +60,7 @@ router.post('/user/:userId', (req, res, next) =>
 );
 
 /* gets all the working times for a specified team */
-router.get('/team/:teamId', function(req, res, next) {
+router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
     models.TeamContent.findAll({
       where: {teamId: req.params.id}
     })

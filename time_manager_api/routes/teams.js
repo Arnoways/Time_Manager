@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
+var permit = require('../config/permission');
 
 /* POST team. */
-router.post('/', function(req, res, next) {
+router.post('/', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
     models.Employee.findByPk(req.body.managerId)
     .then(function(result) {
       if (result == null || result.role !== "Manager") {
@@ -25,7 +26,7 @@ router.post('/', function(req, res, next) {
     })
 });
 
-router.get('/', (req, res, next) =>
+router.get('/', permit.roleCheck('Administrator', 'Manager'), (req, res, next) =>
     models.Team.findAll()
     .then(result => res.send(result))
     .catch((err) => {
@@ -44,7 +45,7 @@ router.get('/:id', (req, res, next) =>
     })
 );
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
     models.Employee.findByPk(req.body.managerId)
     .then(function(result) {
       if (result == null || result.role !== "Manager") {
@@ -65,7 +66,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
   models.Team.destroy({where: {id: req.params.id}})
   .then(() => {
           res.status(200).send('Deleted team with id : ' + req.params.id)
