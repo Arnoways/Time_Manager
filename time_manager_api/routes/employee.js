@@ -89,12 +89,18 @@ bcrypt.hash(req.body.password, 10, function(err, hash) {
                 password: hash,
                 email: req.body.email,
                 role: "Employee"})
-        .then(result => res.status(201).send({
+        .then(function(result){ 
+                models.Clock.create({
+                  time: result.createdAt,
+                  status: false,
+                  employeeId: result.id
+                })
+                res.status(201).send({
                 id: result.id,
                 first_name: result.first_name,
                 last_name: result.last_name,
                 email: result.email,
-                role: result.role}))
+                role: result.role})})
         .catch((err) => {
                 console.error(err)
                 return next(err)

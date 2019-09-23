@@ -356,55 +356,6 @@
           }
         }
       },
-      "post": {
-        "tags": [
-          "Clocks"
-        ],
-        "summary": "Insert a clock for a specific user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "description": "User id",
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "description": "Clock object to insert in the database for the specified user.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "boolean"
-                },
-                "time": {
-                  "type": "string"
-                },
-                "employeeId": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "201": {
-            "description": "Clock created.",
-            "schema": {
-              "$ref": "#/definitions/Clock"
-            }
-          }
-        }
-      },
       "patch": {
         "tags": [
           "Clocks"

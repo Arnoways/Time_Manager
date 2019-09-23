@@ -31,18 +31,18 @@ router.get('/user/:userId', (req, res, next) =>
         })
 );
 
-router.post('/user/:userId', (req, res, next) =>
-        models.Clock.create({
-          time: req.body.time,
-          status: false,
-          employeeId: req.params.userId
-        })
-        .then(result => res.send(result))
-        .catch(err => {
-                console.error(err)
-                return next(err)
-        })
-);
+// router.post('/user/:userId', (req, res, next) =>
+//         models.Clock.create({
+//           time: req.body.time,
+//           status: false,
+//           employeeId: req.params.userId
+//         })
+//         .then(result => res.send(result))
+//         .catch(err => {
+//                 console.error(err)
+//                 return next(err)
+//         })
+// );
 
 /* Updates a clock by specifying the userId   */
 router.patch('/user/:userId', (req, res, next) =>
