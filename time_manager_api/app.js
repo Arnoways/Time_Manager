@@ -20,6 +20,7 @@ var clocksRouter = require('./routes/clock');
 var workingTimeRouter = require('./routes/workingtime');
 var teamsRouter = require('./routes/teams');
 var teamsContentRouter = require('./routes/teamcontent');
+var cors = require('cors');
 var app = express();
 
 // view engine setup
@@ -28,6 +29,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(cookieParser());
 
 app.use(swStats.getMiddleware({swaggerSpec: swaggerDocument}));
