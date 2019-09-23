@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   TeamContent.associate = function(models) {
     // associations can be defined here
-    TeamContent.belongsTo(models.Team, {foreignKey: 'teamId'});
-    TeamContent.belongsTo(models.Employee, {foreignKey: 'employeeId'});
+    TeamContent.belongsTo(models.Team, {foreignKey: 'teamId', onDelete: 'CASCADE' });
+    TeamContent.belongsTo(models.Employee, {foreignKey: 'employeeId', onDelete: 'CASCADE' });
   };
   return TeamContent;
 };

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index')
+var permit = require('../config/permission');
 
 router.get('/:id', (req, res, next) =>
         models.Clock.findByPk(req.params.id)
@@ -11,7 +12,7 @@ router.get('/:id', (req, res, next) =>
         })
 );
 
-router.get('/', (req, res, next) => 
+router.get('/', permit.roleCheck('Administrator', 'Manager'), (req, res, next) => 
         models.Clock.findAll()
         .then(result => res.send(result))
         .catch(err => {
