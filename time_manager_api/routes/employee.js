@@ -143,10 +143,10 @@ router.patch('/:id', permit.roleCheck('Administrator'),function(req, res, next) 
                 role: capitalize(req.body.role)}, {
                 where: {id: req.params.id}
                 })
-        .then(result => res.status(201).send({id: result.id, role: result.role}))
+        .then(result => res.status(201).send(result))
         .catch((err) => {
                 console.error(err)
-                return next(err)
+                return next(err)        
         })
 });
 

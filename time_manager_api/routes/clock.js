@@ -49,7 +49,7 @@ router.patch('/user/:userId', (req, res, next) =>
         models.Clock.findOne({where: {employeeId: req.params.userId}})
         .then(function(result) {
                 if (result.status && !req.body.status) {
-                        models.WorkingTime.create({
+                        models.Workingtime.create({
                             start: result.time,
                             end: req.body.time,
                             employeeId: req.params.userId
@@ -60,23 +60,20 @@ router.patch('/user/:userId', (req, res, next) =>
                         })
                 }
                 /* if status doesn't change, no need to update. */
-                if (result.status !== req.body.status) {
+                if (result.status != req.body.status) {
                         models.Clock.update({
                                 time: req.body.time,
                                 status: req.body.status}, {
-                                where: {id: req.params.id}
+                                where: {employeeId: req.params.userId}
                               })
-                              .then(result => res.status(201).send(result))
+                              .then(resu => res.status(201).send(resu))
                               .catch(err => {
                                       console.error(err)
                                       return next(err)
                               })
+                } else {
+                        res.status(200).send("Nothing to update.")
                 }
-                res.status(200).send("Nothing to update.")
-                .catch(err => {
-                        console.error(err)
-                        return next(err)
-                })
         })
 );
 

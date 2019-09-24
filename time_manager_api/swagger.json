@@ -398,10 +398,7 @@
             "description": "Nothing to update."
           },
           "201": {
-            "description": "Clock updated",
-            "schema": {
-              "$ref": "#/definitions/Clock"
-            }
+            "description": "Clock updated."
           }
         }
       }
