@@ -59,7 +59,7 @@ router.post('/sign_in', function(req, res, next) {
               var token = jwt.sign({
                 id: result.id,
                 role: result.role,
-              }, process.env.JWT_SECRET,{expiresIn: 86400});
+              }, process.env.JWT_SECRET,{expiresIn: 2592000});
               res.send({
                 token: token
               })
