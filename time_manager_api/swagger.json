@@ -774,6 +774,34 @@
         }
       }
     },
+    "/teamscontent/team/{teamid}/user/{id}": {
+      "delete": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Delete an user from a specific team.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teamid",
+            "required": true,
+            "description": "Teams id.",
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User id.",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully deleted from team."
+          }
+        }
+      }
+    },
     "/workingtimes/{id}": {
       "get": {
         "tags": [
