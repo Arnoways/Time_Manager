@@ -14,7 +14,9 @@ module.exports = {
         references: {
           model: 'Teams',
           key: 'id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       employeeId: {
         allowNull: false,
@@ -22,7 +24,9 @@ module.exports = {
         references: {
           model: 'Employees',
           key: 'id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
