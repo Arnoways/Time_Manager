@@ -24,7 +24,10 @@ router.get('/user/:userId', function(req, res, next) {
               start: {[Op.gte]: req.query.start},
               end: {[Op.lte]: req.query.end},
               employeeId: req.params.userId
-            }
+            },
+            order: [
+              ['start']
+            ]
           })
           .then(result => res.send(result))
           .catch(err => {
@@ -35,7 +38,10 @@ router.get('/user/:userId', function(req, res, next) {
           models.Workingtime.findAll({
             where: {
               employeeId: req.params.userId
-            }
+            },
+            order: [
+              ['start']
+            ]
           })
           .then(result => res.send(result))
           .catch(err => {
@@ -77,24 +83,34 @@ router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), functi
             employeeId: {
               [Op.in]: employees
             }
-          }
+          },
+          order: [
+            ['start']
+          ]
         })
-        .then(result => res.send(result))
+        .then(result => res.send(result.sort(sortEmployeeId)))
       } else {
       models.Workingtime.findAll({
       where: {
         employeeId: {
           [Op.in]: employees
         }
-      }
+      },
+      order: [
+        ['start']
+      ]
     })
-    .then(result => res.send(result))}
+    .then(result => res.send(result.sort(sortEmployeeId)))}
     }) 
     .catch((err) => {
       console.error(err)
       return next(err)
   })
 })
+
+function sortEmployeeId(a, b) {
+  return a.employeeId - b.employeeId;
+}
 
 router.put('/:id', (req, res, next) =>
         models.Workingtime.update({
