@@ -85,7 +85,7 @@ router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), functi
             }
           },
           order: [
-            ['start']
+            ['id']
           ]
         })
         .then(result => res.send(result.sort(sortEmployeeId)))
@@ -97,7 +97,7 @@ router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), functi
         }
       },
       order: [
-        ['start']
+        ['id']
       ]
     })
     .then(result => res.send(result.sort(sortEmployeeId)))}
@@ -109,7 +109,7 @@ router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), functi
 })
 
 function sortEmployeeId(a, b) {
-  return a.employeeId - b.employeeId;
+  return a.start - b.start;
 }
 
 router.put('/:id', (req, res, next) =>
