@@ -12,6 +12,9 @@ COPY . .
 
 RUN chmod +x ./entrypoint.sh
 
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 EXPOSE 3000
 
 ENTRYPOINT ["/usr/app/time_manager/entrypoint.sh"]
