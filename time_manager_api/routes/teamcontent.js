@@ -47,6 +47,20 @@ router.get('/user/:id', (req, res, next) =>
     })
 );
 
+router.delete('/team/:teamid/user/:id', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
+        models.TeamContent.destroy({where: {
+                teamId: req.params.teamid,
+                employeeId: req.params.id
+        }})
+        .then(() => {
+                res.status(200).send('Deleted employee with id : ' + req.params.id + ' from team with id: ' + req.params.teamid)
+        })
+        .catch((err) => {
+                console.error(err)
+                return next(err)
+        })
+});
+
 /* get all records for one team */
 router.get('/team/:id', permit.roleCheck('Administrator', 'Manager'), (req, res, next) =>
     models.TeamContent.findAll({

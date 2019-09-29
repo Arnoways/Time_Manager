@@ -398,10 +398,7 @@
             "description": "Nothing to update."
           },
           "201": {
-            "description": "Clock updated",
-            "schema": {
-              "$ref": "#/definitions/Clock"
-            }
+            "description": "Clock updated."
           }
         }
       }
@@ -773,6 +770,34 @@
                 "$ref": "#/definitions/TeamsContent"
               }
             }
+          }
+        }
+      }
+    },
+    "/teamscontent/team/{teamid}/user/{id}": {
+      "delete": {
+        "tags": [
+          "TeamsContent"
+        ],
+        "summary": "Delete an user from a specific team.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teamid",
+            "required": true,
+            "description": "Teams id.",
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User id.",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully deleted from team."
           }
         }
       }
