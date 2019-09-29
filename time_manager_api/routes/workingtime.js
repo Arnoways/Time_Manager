@@ -66,7 +66,7 @@ router.post('/user/:userId', (req, res, next) =>
 );
 
 /* gets all the working times for a specified team */
-router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {  
+router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
   models.TeamContent.findAll({
       where: {teamId: req.params.teamId}
     })
@@ -89,6 +89,10 @@ router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), functi
           ]
         })
         .then(result => res.send(result.sort(sortEmployeeId)))
+        .catch((err) => {
+          console.error(err)
+          return next(err)
+        })
       } else {
       models.Workingtime.findAll({
       where: {
