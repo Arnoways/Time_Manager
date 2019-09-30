@@ -18,9 +18,9 @@ before_install:
 script:
   - git submodule init
   - git submodule update --force --remote
-  - docker-compose -f docker-compose-prod.yml up -d bdd
-  - docker-compose -f docker-compose-prod.yml build back front
-  - docker-compose -f docker-compose-prod.yml up -d
+  - docker-compose up -d bdd
+  - docker-compose build back front
+  - docker-compose up -d
   - docker-compose ps
   - sleep 5
   - curl -X GET -I http://localhost:3000/health
