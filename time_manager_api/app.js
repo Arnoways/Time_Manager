@@ -5,6 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+var fs = require('fs');
+var https = require('https');
+var privateKey = fs.readFileSync('/ssl/privkey1.pem', 'utf8');
+var certificate = fs.readFileSync('/ssl/cert1.pem', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
+
 /* swagger */
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -44,6 +52,10 @@ app.use('/api/clocks', clocksRouter);
 app.use('/api/workingtimes', workingTimeRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/teamscontent', teamsContentRouter);
+
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(8443);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

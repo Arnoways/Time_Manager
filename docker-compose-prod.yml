@@ -25,6 +25,7 @@ services:
     # bind host machine port 3000 to the 3000 port of the container
     ports:
       - "3000:3000"
+      - "3001:8443"
     # using env variable to speed up API as it is advised in documentation
     environment:
       - NODE_ENV=production
@@ -36,6 +37,7 @@ services:
     volumes:
       - ./time_manager_api:/usr/app/time_manager/
       - /usr/app/time_manager/node_modules
+      - /etc/letsencrypt/archive/timepool.me:/ssl
     restart: unless-stopped
     logging:
       driver: "json-file"
