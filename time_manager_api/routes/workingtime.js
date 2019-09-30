@@ -24,7 +24,10 @@ router.get('/user/:userId', function(req, res, next) {
               start: {[Op.gte]: req.query.start},
               end: {[Op.lte]: req.query.end},
               employeeId: req.params.userId
-            }
+            },
+            order: [
+              ['start']
+            ]
           })
           .then(result => res.send(result))
           .catch(err => {
@@ -35,7 +38,10 @@ router.get('/user/:userId', function(req, res, next) {
           models.Workingtime.findAll({
             where: {
               employeeId: req.params.userId
-            }
+            },
+            order: [
+              ['start']
+            ]
           })
           .then(result => res.send(result))
           .catch(err => {
@@ -45,7 +51,7 @@ router.get('/user/:userId', function(req, res, next) {
         }
 });
 
-/* creates a workingtime new working time for an employee*/
+/* creates a new working time for an employee*/
 router.post('/user/:userId', (req, res, next) =>
         models.Workingtime.create({
           start: req.body.start,
@@ -61,27 +67,54 @@ router.post('/user/:userId', (req, res, next) =>
 
 /* gets all the working times for a specified team */
 router.get('/team/:teamId', permit.roleCheck('Administrator', 'Manager'), function(req, res, next) {
-    models.TeamContent.findAll({
-      where: {teamId: req.params.id}
+  models.TeamContent.findAll({
+      where: {teamId: req.params.teamId}
     })
     .then(function(result) {
       var employees = []
-      result.forEach(employeeId => {
-        employees.push(employeeId);
+      result.forEach(employee => {
+        employees.push(employee.employeeId);
       });
-    })
-    .then(models.Workingtime.findAll({
+      if (req.query.start !== undefined && req.query.end !== undefined) {
+        models.Workingtime.findAll({
+          where: {
+            start: {[Op.gte]: req.query.start},
+            end: {[Op.lte]: req.query.end},
+            employeeId: {
+              [Op.in]: employees
+            }
+          },
+          order: [
+            ['id']
+          ]
+        })
+        .then(result => res.send(result.sort(sortEmployeeId)))
+        .catch((err) => {
+          console.error(err)
+          return next(err)
+        })
+      } else {
+      models.Workingtime.findAll({
       where: {
         employeeId: {
           [Op.in]: employees
         }
-      }
-    })).then(result => res.send(result))
+      },
+      order: [
+        ['id']
+      ]
+    })
+    .then(result => res.send(result.sort(sortEmployeeId)))}
+    }) 
     .catch((err) => {
       console.error(err)
       return next(err)
   })
 })
+
+function sortEmployeeId(a, b) {
+  return a.start - b.start;
+}
 
 router.put('/:id', (req, res, next) =>
         models.Workingtime.update({

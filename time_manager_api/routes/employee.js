@@ -59,7 +59,7 @@ router.post('/sign_in', function(req, res, next) {
               var token = jwt.sign({
                 id: result.id,
                 role: result.role,
-              }, process.env.JWT_SECRET,{expiresIn: 86400});
+              }, process.env.JWT_SECRET,{expiresIn: 2592000});
               res.send({
                 token: token
               })
@@ -143,10 +143,10 @@ router.patch('/:id', permit.roleCheck('Administrator'),function(req, res, next) 
                 role: capitalize(req.body.role)}, {
                 where: {id: req.params.id}
                 })
-        .then(result => res.status(201).send({id: result.id, role: result.role}))
+        .then(result => res.status(201).send(result))
         .catch((err) => {
                 console.error(err)
-                return next(err)
+                return next(err)        
         })
 });
 
