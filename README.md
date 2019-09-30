@@ -1,12 +1,12 @@
-# Time_manager
+# [Time_manager](https://timepool.me)
 [![Build Status](https://travis-ci.org/Arnoways/Time_Manager.svg?branch=prod)](https://travis-ci.org/Arnoways/Time_Manager)
 
 ## API Documentation
 https://timepool.me:3001/api-docs
 
-Ce readme explique comment fonctionne la partie conteneurs de notre projet.
+Ce readme explique comment fonctionne notre projet.
 
-Pour l'instant nous avons 3 conteneurs: *back*, *front* et *bdd*:
+Nous avons 3 conteneurs principaux: *back*, *front* et *bdd*:
   - back est notre API nodejs exposée sur le port 3000.
   - front est notre front-end en Vue.js exposé sur le port 8080.
   - bdd est notre base de données Postgresql.
@@ -80,6 +80,6 @@ Le fichier de configuration se trouve [ici](.travis.yml).
  qui a été encrypté en suivant cette [doc](https://docs.travis-ci.com/user/encrypting-files/)*
 
 ### Scripts
-[create_dummy_user.sh](./scripts/create_dummy_user.sh) -> crée un fake employé dans la base en passant par l'api avec le rôle "employé".  
+[create_dummy.sh](./scripts/create_dummy.sh) -> crée un fake employé dans la base en passant par l'api avec le rôle "employé".  
 [deploy.sh](./scripts/deploy.sh) -> update le repo sur la branche spécifié et relance les conteneurs.  
 [reset.sh](./scripts/reset.sh) -> :warning: Supprime les conteneurs ET les volumes (i.e: perte de data de la bdd) puis relance tout.
