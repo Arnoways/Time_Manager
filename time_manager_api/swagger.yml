@@ -514,6 +514,27 @@ paths:
             items:
               $ref: "#/definitions/TeamsContent"
 
+  /teamscontent/team/{teamid}/user/{id}:
+    delete:
+      tags:
+      - "TeamsContent"
+      summary: "Delete a user from a specific team."
+      parameters:
+        - in: "path"
+          name: "teamid"
+          required: true
+          description: "TeamsContent id"
+          type: integer
+        - in: "path"
+          name: "id"
+          required: true
+          description: "User id"
+          type: integer
+      responses:
+        200:
+          description: "User successfully deleted."
+
+
   /teamscontent/user/{id}:
     get:
       tags:
