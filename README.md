@@ -2,9 +2,7 @@
 [![Build Status](https://travis-ci.org/Arnoways/Time_Manager.svg?branch=prod)](https://travis-ci.org/Arnoways/Time_Manager)
 
 ## API Documentation
-http://timepool.me:3000/api-docs
-
-To-do: traduire en anglais.
+https://timepool.me:3001/api-docs
 
 Ce readme explique comment fonctionne la partie conteneurs de notre projet.
 

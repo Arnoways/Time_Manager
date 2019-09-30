@@ -30,6 +30,7 @@ services:
     environment:
       - NODE_ENV=production
       - JWT_SECRET="4h4PgYCWknlw176E"
+      - HTTPS_ENABLED=true
     networks:
       - back-network
       - front-network
