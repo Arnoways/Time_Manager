@@ -85,4 +85,4 @@ Le fichier de configuration se trouve [ici](.travis.yml).
 [reset.sh](./scripts/reset.sh) -> :warning: Supprime les conteneurs ET les volumes (i.e: perte de data de la bdd) puis relance tout.
 
 ## Monitoring
-https://timepool.me/monitoring
+:tada: https://timepool.me/monitoring :tada:
